@@ -4,21 +4,19 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using Curso.Core;
 
 #nullable disable
 
-namespace Curso.Domains.Entities
-{
+namespace Curso.Domains.Entities {
     /// <summary>
     /// Customer information.
     /// </summary>
     [Table("Customer", Schema = "SalesLT")]
     [Index(nameof(Rowguid), Name = "AK_Customer_rowguid", IsUnique = true)]
     [Index(nameof(EmailAddress), Name = "IX_Customer_EmailAddress")]
-    public partial class Customer
-    {
-        public Customer()
-        {
+    public partial class Customer /*: IValidatableObject*/ {
+        public Customer() {
             CustomerAddresses = new HashSet<CustomerAddress>();
             SalesOrderHeaders = new HashSet<SalesOrderHeader>();
         }
@@ -43,6 +41,7 @@ namespace Curso.Domains.Entities
         /// </summary>
         [Required]
         [StringLength(50)]
+        [Display(Name = "Nombre")]
         public string FirstName { get; set; }
         /// <summary>
         /// Middle name or middle initial of the person.
@@ -54,6 +53,7 @@ namespace Curso.Domains.Entities
         /// </summary>
         [Required]
         [StringLength(50)]
+        [Display(Name = "Apellidos")]
         public string LastName { get; set; }
         /// <summary>
         /// Surname suffix. For example, Sr. or Jr.
@@ -64,6 +64,7 @@ namespace Curso.Domains.Entities
         /// The customer&apos;s organization.
         /// </summary>
         [StringLength(128)]
+        [Display(Name = "Razón Social")]
         public string CompanyName { get; set; }
         /// <summary>
         /// The customer&apos;s sales person, an employee of AdventureWorks Cycles.
@@ -74,17 +75,20 @@ namespace Curso.Domains.Entities
         /// E-mail address for the person.
         /// </summary>
         [StringLength(50)]
+        [EmailAddress]
         public string EmailAddress { get; set; }
         /// <summary>
         /// Phone number associated with the person.
         /// </summary>
         [StringLength(25)]
+        [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
         /// <summary>
         /// Password for the e-mail account.
         /// </summary>
         [Required]
         [StringLength(128)]
+        [DataType(DataType.Password)]
         public string PasswordHash { get; set; }
         /// <summary>
         /// Random value concatenated with the password string before the password is hashed.
@@ -101,11 +105,25 @@ namespace Curso.Domains.Entities
         /// Date and time the record was last updated.
         /// </summary>
         [Column(TypeName = "datetime")]
+        [Past]
         public DateTime ModifiedDate { get; set; }
 
         [InverseProperty(nameof(CustomerAddress.Customer))]
         public virtual ICollection<CustomerAddress> CustomerAddresses { get; set; }
         [InverseProperty(nameof(SalesOrderHeader.Customer))]
         public virtual ICollection<SalesOrderHeader> SalesOrderHeaders { get; set; }
+
+        //public IEnumerable<ValidationResult> Validate(ValidationContext validationContext) {
+        //    var validationResults = new List<ValidationResult>();
+        //    Validator.TryValidateObject(this,
+        //              validationContext,
+        //              validationResults,
+        //              true);
+        //    if (ModifiedDate.IsNotPast())
+        //        validationResults.Add(new ValidationResult("No se puede modificar con una fecha futura", new string[] { nameof(ModifiedDate) }));
+        //    return validationResults;
+        //}
+
+
     }
 }
