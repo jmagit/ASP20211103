@@ -20,6 +20,6 @@ namespace Curso.MVC.Controllers {
                 ViewData["listado"] = new List<string> { "uno", "dos", "tres" };
             ViewData["hayValor"] = id.HasValue;
             return View();
+        }
     }
-}
 }
