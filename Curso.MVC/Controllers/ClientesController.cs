@@ -8,13 +8,16 @@ using Microsoft.EntityFrameworkCore;
 using Curso.Domains.Entities;
 using Curso.Infraestructure.UoW;
 using System.ComponentModel.DataAnnotations;
+using Curso.Domains.Contracts;
 
 namespace Curso.MVC.Controllers {
     public class ClientesController : Controller {
         private readonly TiendaDbContext _context;
+        private readonly IClienteRespository dao;
 
-        public ClientesController(TiendaDbContext context) {
+        public ClientesController(TiendaDbContext context, IClienteRespository dao) {
             _context = context;
+            this.dao = dao ?? throw new ArgumentNullException(nameof(dao));
         }
 
         // GET: Clientes
@@ -53,6 +56,7 @@ namespace Curso.MVC.Controllers {
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CustomerId,NameStyle,Title,FirstName,MiddleName,LastName,Suffix,CompanyName,SalesPerson,EmailAddress,Phone,PasswordHash,PasswordSalt,Rowguid,ModifiedDate")] Customer customer) {
             if (ModelState.IsValid) {
+                // dao.add(customer);
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Curso.Domains.Entities.Customer>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Clientes";
 }
 
 <h1>Index</h1>
@@ -31,7 +31,7 @@
     </tbody>
 </table>
 
-<nav aria-label="Page navigation">
+@*<nav aria-label="Page navigation">
     <ul class="pagination">
         <li class="page-item@(ViewBag.page==0?" disabled":"")"><a class="page-link" asp-route-page="0" asp-route-rows="@ViewBag.rows"><span aria-hidden="true">&laquo;</span></a></li>
         @for (int i = 0; i < (decimal)ViewData["totalPages"]; i++) {
@@ -40,6 +40,14 @@
         }
         <li class="page-item@(ViewBag.page==ViewBag.totalPages-1?" disabled":"")"><a class="page-link" asp-route-page="@(ViewBag.totalPages-1)" asp-route-rows="@ViewBag.rows"><span aria-hidden="true">&raquo;</span></a></li>
     </ul>
-</nav>
+</nav>*@
 @await Html.PartialAsync("../Shared/_pagination")
 
+@section Abside {
+<h2>Esto es el Abside</h2>
+}
+@section Scripts {
+<script>
+    alert("Entreeee")
+</script>
+}

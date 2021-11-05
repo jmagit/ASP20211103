@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Curso.MVC.Controllers {
     public class DemoController : Controller {
-        public IActionResult Index() {
+        public IActionResult Index( [FromHeader(Name ="user-agent")]string userAgent) {
+            if (userAgent.Contains("Android "))
+                return View("Movil");
             return View();
         }
         public IActionResult ConId(int? id) {

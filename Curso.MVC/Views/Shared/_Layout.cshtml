@@ -51,7 +51,11 @@
     <main class="container" role="main">
         @RenderBody()
     </main>
-
+    @if (IsSectionDefined("Abside")) {
+        <abside>
+            @await RenderSectionAsync("Abside", required: false)
+        </abside>
+    }
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2021 - Curso.MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

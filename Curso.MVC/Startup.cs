@@ -1,4 +1,6 @@
+using Curso.Domains.Contracts;
 using Curso.Infraestructure.UoW;
+using Curso.Infraestructure.Repositories;
 using Curso.MVC.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +33,8 @@ namespace Curso.MVC {
                 options.UseSqlServer(
                     Configuration.GetConnectionString("TiendaConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddTransient<IClienteRespository, ClienteRepositoryMock>();
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
