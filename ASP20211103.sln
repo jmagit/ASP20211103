@@ -12,6 +12,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Curso.MVC", "Curso.MVC\Curs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curso.MVCTests", "Curso.MVCTests\Curso.MVCTests.csproj", "{1E380E82-572B-4EC4-AAEE-1ABF0A04F98F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curso.RazorPages", "Curso.RazorPages\Curso.RazorPages.csproj", "{61C661FB-04BC-4EA5-A767-8FA0B1AC9FF0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{1E380E82-572B-4EC4-AAEE-1ABF0A04F98F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E380E82-572B-4EC4-AAEE-1ABF0A04F98F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E380E82-572B-4EC4-AAEE-1ABF0A04F98F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61C661FB-04BC-4EA5-A767-8FA0B1AC9FF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61C661FB-04BC-4EA5-A767-8FA0B1AC9FF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61C661FB-04BC-4EA5-A767-8FA0B1AC9FF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61C661FB-04BC-4EA5-A767-8FA0B1AC9FF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

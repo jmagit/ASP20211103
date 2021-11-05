@@ -36,6 +36,8 @@ namespace Curso.MVC {
 
             services.AddTransient<IClienteRespository, ClienteRepositoryMock>();
 
+            services.AddControllers().AddXmlSerializerFormatters();
+
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
