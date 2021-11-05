@@ -7,8 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
-namespace Curso.Domains.Entities
-{
+namespace Curso.Domains.Entities {
     /// <summary>
     /// Products sold or used in the manfacturing of sold products.
     /// </summary>
@@ -16,10 +15,8 @@ namespace Curso.Domains.Entities
     [Index(nameof(Name), Name = "AK_Product_Name", IsUnique = true)]
     [Index(nameof(ProductNumber), Name = "AK_Product_ProductNumber", IsUnique = true)]
     [Index(nameof(Rowguid), Name = "AK_Product_rowguid", IsUnique = true)]
-    public partial class Product
-    {
-        public Product()
-        {
+    public partial class Product {
+        public Product() {
             SalesOrderDetails = new HashSet<SalesOrderDetail>();
         }
 
@@ -28,18 +25,21 @@ namespace Curso.Domains.Entities
         /// </summary>
         [Key]
         [Column("ProductID")]
+        [Display(Name = "Código")]
         public int ProductId { get; set; }
         /// <summary>
         /// Name of the product.
         /// </summary>
         [Required]
         [StringLength(50)]
+        [Display(Name = "Nombre")]
         public string Name { get; set; }
         /// <summary>
         /// Unique product identification number.
         /// </summary>
         [Required]
         [StringLength(25)]
+        [Display(Name = "Número")]
         public string ProductNumber { get; set; }
         /// <summary>
         /// Product color.
@@ -50,46 +50,57 @@ namespace Curso.Domains.Entities
         /// Standard cost of the product.
         /// </summary>
         [Column(TypeName = "money")]
+        [Display(Name = "Coste estándar")]
+        [DataType(DataType.Currency)]
         public decimal StandardCost { get; set; }
         /// <summary>
         /// Selling price.
         /// </summary>
         [Column(TypeName = "money")]
+        [Display(Name = "Precio de venta")]
+        [DataType(DataType.Currency)]
         public decimal ListPrice { get; set; }
         /// <summary>
         /// Product size.
         /// </summary>
         [StringLength(5)]
+        [Display(Name = "Tamaño")]
         public string Size { get; set; }
         /// <summary>
         /// Product weight.
         /// </summary>
         [Column(TypeName = "decimal(8, 2)")]
+        [Display(Name = "Peso")]
         public decimal? Weight { get; set; }
         /// <summary>
         /// Product is a member of this product category. Foreign key to ProductCategory.ProductCategoryID. 
         /// </summary>
         [Column("ProductCategoryID")]
+        [Display(Name = "Categoría")]
         public int? ProductCategoryId { get; set; }
         /// <summary>
         /// Product is a member of this product model. Foreign key to ProductModel.ProductModelID.
         /// </summary>
         [Column("ProductModelID")]
+        [Display(Name = "Modelo")]
         public int? ProductModelId { get; set; }
         /// <summary>
         /// Date the product was available for sale.
         /// </summary>
         [Column(TypeName = "datetime")]
+        [Display(Name = "Disponible desde")]
         public DateTime SellStartDate { get; set; }
         /// <summary>
         /// Date the product was no longer available for sale.
         /// </summary>
         [Column(TypeName = "datetime")]
+        [Display(Name = "Disponible hasta")]
         public DateTime? SellEndDate { get; set; }
         /// <summary>
         /// Date the product was discontinued.
         /// </summary>
         [Column(TypeName = "datetime")]
+        [Display(Name = "Retirado")]
         public DateTime? DiscontinuedDate { get; set; }
         /// <summary>
         /// Small image of the product.
@@ -113,9 +124,11 @@ namespace Curso.Domains.Entities
 
         [ForeignKey(nameof(ProductCategoryId))]
         [InverseProperty("Products")]
-        public virtual ProductCategory ProductCategory { get; set; }
+        [Display(Name = "Categoría")]
+        public virtual Category ProductCategory { get; set; }
         [ForeignKey(nameof(ProductModelId))]
         [InverseProperty("Products")]
+        [Display(Name = "Modelo")]
         public virtual ProductModel ProductModel { get; set; }
         [InverseProperty(nameof(SalesOrderDetail.Product))]
         public virtual ICollection<SalesOrderDetail> SalesOrderDetails { get; set; }

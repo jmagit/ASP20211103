@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Curso.Domains.Entities;
 using Curso.Infraestructure.UoW;
+using System.ComponentModel.DataAnnotations;
 
 namespace Curso.MVC.Controllers {
     public class ClientesController : Controller {
@@ -21,6 +22,7 @@ namespace Curso.MVC.Controllers {
             var filas = await _context.Customers.CountAsync();
             ViewBag.totalPages = Math.Ceiling((decimal)filas / rows);
             ViewBag.page = page;
+            ViewBag.rows = rows;
             return View(await _context.Customers.OrderBy(m => m.FirstName + m.LastName).Skip(page * rows).Take(rows).ToListAsync());
         }
 
@@ -80,6 +82,7 @@ namespace Curso.MVC.Controllers {
             if (id != customer.CustomerId) {
                 return NotFound();
             }
+            ModelState.AddModelError("", "Esto no pasa");
 
             if (ModelState.IsValid) {
                 try {
@@ -124,6 +127,14 @@ namespace Curso.MVC.Controllers {
 
         private bool CustomerExists(int id) {
             return _context.Customers.Any(e => e.CustomerId == id);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult VerifyPhone([RegularExpression(@"^\d{3}-\d{3}-\d{4}$")] string phone) {
+            if (!ModelState.IsValid) {
+                return Json($"Phone {phone} has an invalid format. Format: ###-###-####");
+            }
+            return Json(true);
         }
     }
 }

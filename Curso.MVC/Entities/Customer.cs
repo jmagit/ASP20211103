@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Curso.Core;
+using Microsoft.AspNetCore.Mvc;
 
 #nullable disable
 
@@ -82,6 +83,7 @@ namespace Curso.Domains.Entities {
         /// </summary>
         [StringLength(25)]
         [DataType(DataType.PhoneNumber)]
+        [Remote(action: "VerifyPhone", controller: "Clientes", AdditionalFields = nameof(LastName))]
         public string Phone { get; set; }
         /// <summary>
         /// Password for the e-mail account.

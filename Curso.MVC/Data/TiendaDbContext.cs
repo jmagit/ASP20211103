@@ -23,7 +23,7 @@ namespace Curso.Infraestructure.UoW
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<CustomerAddress> CustomerAddresses { get; set; }
         public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<ProductCategory> ProductCategories { get; set; }
+        public virtual DbSet<Category> ProductCategories { get; set; }
         public virtual DbSet<ProductDescription> ProductDescriptions { get; set; }
         public virtual DbSet<ProductModel> ProductModels { get; set; }
         public virtual DbSet<ProductModelProductDescription> ProductModelProductDescriptions { get; set; }
@@ -186,7 +186,7 @@ namespace Curso.Infraestructure.UoW
                 entity.Property(e => e.Weight).HasComment("Product weight.");
             });
 
-            modelBuilder.Entity<ProductCategory>(entity =>
+            modelBuilder.Entity<Category>(entity =>
             {
                 entity.HasComment("High-level product categorization.");
 
@@ -204,8 +204,8 @@ namespace Curso.Infraestructure.UoW
                     .HasDefaultValueSql("(newid())")
                     .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
-                entity.HasOne(d => d.ParentProductCategory)
-                    .WithMany(p => p.InverseParentProductCategory)
+                entity.HasOne(d => d.ParentCategory)
+                    .WithMany(p => p.SubCategories)
                     .HasForeignKey(d => d.ParentProductCategoryId)
                     .HasConstraintName("FK_ProductCategory_ProductCategory_ParentProductCategoryID_ProductCategoryID");
             });

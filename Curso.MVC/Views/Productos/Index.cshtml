@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Curso.Domains.Entities.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Foto
+            </th>
+            <th>
+                Productos
+            </th>
+            <th><a asp-action="Create">Create New</a></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    <img src="~/productos/photo/@item.ProductId" class="img-thumbnail" alt="Foto de @item.Name">
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                    <br />
+                    <small>@Html.DisplayFor(modelItem => item.ProductNumber)</small>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@await Html.PartialAsync("../Shared/_pagination")
+

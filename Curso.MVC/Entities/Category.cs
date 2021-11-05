@@ -15,11 +15,11 @@ namespace Curso.Domains.Entities
     [Table("ProductCategory", Schema = "SalesLT")]
     [Index(nameof(Name), Name = "AK_ProductCategory_Name", IsUnique = true)]
     [Index(nameof(Rowguid), Name = "AK_ProductCategory_rowguid", IsUnique = true)]
-    public partial class ProductCategory
+    public partial class Category
     {
-        public ProductCategory()
+        public Category()
         {
-            InverseParentProductCategory = new HashSet<ProductCategory>();
+            SubCategories = new HashSet<Category>();
             Products = new HashSet<Product>();
         }
 
@@ -52,10 +52,10 @@ namespace Curso.Domains.Entities
         public DateTime ModifiedDate { get; set; }
 
         [ForeignKey(nameof(ParentProductCategoryId))]
-        [InverseProperty(nameof(ProductCategory.InverseParentProductCategory))]
-        public virtual ProductCategory ParentProductCategory { get; set; }
-        [InverseProperty(nameof(ProductCategory.ParentProductCategory))]
-        public virtual ICollection<ProductCategory> InverseParentProductCategory { get; set; }
+        [InverseProperty(nameof(Category.SubCategories))]
+        public virtual Category ParentCategory { get; set; }
+        [InverseProperty(nameof(Category.ParentCategory))]
+        public virtual ICollection<Category> SubCategories { get; set; }
         [InverseProperty(nameof(Product.ProductCategory))]
         public virtual ICollection<Product> Products { get; set; }
     }

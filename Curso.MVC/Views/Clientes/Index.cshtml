@@ -16,27 +16,30 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title) @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.MiddleName) @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.CustomerId">Ver</a> |
-                <a asp-action="Edit" asp-route-id="@item.CustomerId">Editar</a> |
-                <a asp-action="Delete" asp-route-id="@item.CustomerId">Borrar</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title) @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.MiddleName) @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.CustomerId">Ver</a> |
+                    <a asp-action="Edit" asp-route-id="@item.CustomerId">Editar</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CustomerId">Borrar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
-<nav aria-label="Page navigation example">
+<nav aria-label="Page navigation">
     <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item@(ViewBag.page==0?" disabled":"")"><a class="page-link" asp-route-page="0" asp-route-rows="@ViewBag.rows"><span aria-hidden="true">&laquo;</span></a></li>
         @for (int i = 0; i < (decimal)ViewData["totalPages"]; i++) {
-        <li class="page-item"><a asp-action="Index">@(i + 1)</a></li>
+            var parms = new Dictionary<string, string> { { "page", i.ToString() }, { "rows", "10" } };
+            <li class="page-item@(ViewBag.page==i?" active":"")"><a class="page-link" asp-route-page="@i" asp-route-rows="@ViewBag.rows">@(i + 1)</a></li>
         }
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        <li class="page-item@(ViewBag.page==ViewBag.totalPages-1?" disabled":"")"><a class="page-link" asp-route-page="@(ViewBag.totalPages-1)" asp-route-rows="@ViewBag.rows"><span aria-hidden="true">&raquo;</span></a></li>
     </ul>
 </nav>
+@await Html.PartialAsync("../Shared/_pagination")
+

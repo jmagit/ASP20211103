@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Catalogo";
+}
+
+<h1>Catálogo</h1>
+
+<ul class="nav nav-tabs">
+    @foreach (var item in ViewBag.categorias) {
+    <li class="nav-item"><a class="nav-link@(ViewBag?.categoria==item.Name.ToLower()?" active":"")" asp-route="catalogo" asp-route-categoria="@item.Name.ToLower()">@item.Name</a></li>
+    }
+</ul>
+<ul class="nav nav-pills">
+    @if(ViewBag.subcategorias!=null) foreach (var item in ViewBag.subcategorias) {
+    <li class="nav-item"><a class="nav-link@(ViewBag?.subcategoria==item.Name.ToLower()?" active":"")" asp-route="catalogo" asp-route-categoria="@ViewBag.categoria" asp-route-subcategoria="@item.Name.ToLower()">@item.Name</a></li>
+    }
+</ul>
+<div class="row">
+    @if(ViewBag.productos!=null) foreach (var item in ViewBag.productos) {
+    <div class="card" style="max-width: 16rem;">
+        <img src="~/productos/photo/@item.ProductId" class="card-img-top img-thumbnail" alt="Foto de @item.Name" >
+        <div class="card-body">
+            <h5 class="card-title">@item.Name</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a asp-route="catalogoProducto" asp-route-categoria="@ViewBag.categoria" asp-route-subcategoria="@item.Name.ToLower()" asp-route-id="@item.ProductId" asp-route-resto="@item.Name" title="Leer mas de @item.Name" class="btn btn-primary">Leer mas ...</a>
+        </div>
+    </div>    
+    }
+</div>
