@@ -86,7 +86,7 @@ namespace Curso.MVC.Controllers {
             if (id != customer.CustomerId) {
                 return NotFound();
             }
-            ModelState.AddModelError("", "Esto no pasa");
+            //ModelState.AddModelError("", "Esto no pasa");
 
             if (ModelState.IsValid) {
                 try {

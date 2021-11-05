@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Curso.Domains.Entities;
 using Curso.Infraestructure.UoW;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Curso.MVC.Controllers {
+    [Authorize]
     public class ProductosController : Controller {
         private readonly TiendaDbContext _context;
 
